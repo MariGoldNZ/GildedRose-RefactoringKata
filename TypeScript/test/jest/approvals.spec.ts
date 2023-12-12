@@ -67,6 +67,14 @@ describe('Gilded Rose Approval', () => {
     const items2 = gildedRose.updateQuality();
     expect(items2[0].quality).toBe(0); 
   });
+  
+  it('should Any item should not go negative', () => {
+    const gildedRose = new GildedRose([new Item('Conjured item', 3, 0)]);
+
+    const items1 = gildedRose.updateQuality();
+    expect(items1[0].quality).toBe(0); 
+  });
+
   it('should Conjured degrade twice as fast when sellIn is below 0', () => {
     const gildedRose = new GildedRose([new Item('Conjured item', -1, 10)]);
     const items = gildedRose.updateQuality();
@@ -74,5 +82,7 @@ describe('Gilded Rose Approval', () => {
     expect(items[0].sellIn).toBe(-2); 
     expect(items[0].quality).toBe(6); // assuming here that the 2 conditions stacks: 1) the items with sellIn value below 0 and 2) conjured items both degrade twice as fast which means that 3) conjured items with sellIn below 0 degrade 4 times faster... 
   });
+
+
 
 });
