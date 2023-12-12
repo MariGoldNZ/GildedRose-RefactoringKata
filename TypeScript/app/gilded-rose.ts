@@ -69,6 +69,6 @@ export class GildedRose {
       }
     
 
-    return this.items;
+    return item;
   }
 }
