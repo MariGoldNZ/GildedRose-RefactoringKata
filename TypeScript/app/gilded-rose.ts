@@ -16,14 +16,24 @@ export class GildedRose {
   constructor(items = [] as Array<Item>) {
     this.items = items;
   }
+
+  checkName(item: Item, name: string): boolean {
+    return item.name.toLowerCase().includes(name.toLowerCase());
+  }
+
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
         this.updateItem(this.items[i]);
     }
     return this.items;
   }
+
   updateItem(item: Item):Item {
-    
+    if(this.checkName(item, 'conjured')) {
+      
+      return item;
+    }
+    else {
       if (item.name != 'Aged Brie' && item.name != 'Backstage passes to a TAFKAL80ETC concert') {
         if (item.quality > 0) {
           if (item.name != 'Sulfuras, Hand of Ragnaros') {
@@ -68,7 +78,7 @@ export class GildedRose {
         }
       }
     
-
+    }
     return item;
   }
 }
