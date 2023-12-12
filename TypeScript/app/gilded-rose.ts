@@ -20,6 +20,9 @@ export class GildedRose {
   updateConjuredItem(item: Item): Item {
     item.sellIn = item.sellIn - 1;
     item.quality = Math.max(0, item.quality - 2);
+    if (item.sellIn < 0) {
+      item.quality = Math.max(0, item.quality - 2);
+    }
     return item;
   }
 
