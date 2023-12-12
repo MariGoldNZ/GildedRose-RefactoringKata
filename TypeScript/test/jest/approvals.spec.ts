@@ -75,8 +75,14 @@ describe('Gilded Rose Approval', () => {
     expect(items1[0].quality).toBe(0); 
   });
 
-  it('should Aged Brie gain qaulity with time', () => {
+  it('should Aged Brie gain quality with time', () => {
     const gildedRose = new GildedRose([new Item('Aged Brie', 3, 0)]);
+
+    const items1 = gildedRose.updateQuality();
+    expect(items1[0].quality).toBe(1); 
+  });
+  it('should Aged brie 2 gain quality with time', () => {
+    const gildedRose = new GildedRose([new Item('Aged brie 2', 3, 0)]);
 
     const items1 = gildedRose.updateQuality();
     expect(items1[0].quality).toBe(1); 
