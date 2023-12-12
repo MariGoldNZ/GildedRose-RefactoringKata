@@ -51,4 +51,11 @@ describe('Gilded Rose Approval', () => {
     expect(gameConsoleOutput).toMatchSnapshot();
   });
 
+  it('should Conjured degrade twice as fast', () => {
+    const gildedRose = new GildedRose([new Item('Conjured item', 10, 10)]);
+    const items = gildedRose.updateQuality();
+    expect(items[0].sellIn).toBe(9); 
+    expect(items[0].quality).toBe(8); 
+  });
+
 });
