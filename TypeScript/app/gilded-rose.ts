@@ -17,6 +17,12 @@ export class GildedRose {
     this.items = items;
   }
 
+  updateConjuredItem(item: Item): Item {
+    item.sellIn = item.sellIn - 1;
+    item.quality = Math.max(0, item.quality - 2);
+    return item;
+  }
+
   checkName(item: Item, name: string): boolean {
     return item.name.toLowerCase().includes(name.toLowerCase());
   }
@@ -30,7 +36,7 @@ export class GildedRose {
 
   updateItem(item: Item):Item {
     if(this.checkName(item, 'conjured')) {
-      
+      item = this.updateConjuredItem(item);
       return item;
     }
     else {
