@@ -58,4 +58,14 @@ describe('Gilded Rose Approval', () => {
     expect(items[0].quality).toBe(8); 
   });
 
+  it('should Conjured should not go negative', () => {
+    const gildedRose = new GildedRose([new Item('Conjured item', 3, 3)]);
+    
+    const items1 = gildedRose.updateQuality();
+    expect(items1[0].quality).toBe(1); 
+
+    const items2 = gildedRose.updateQuality();
+    expect(items2[0].quality).toBe(0); 
+  });
+
 });
