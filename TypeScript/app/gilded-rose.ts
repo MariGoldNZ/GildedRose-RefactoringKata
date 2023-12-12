@@ -38,7 +38,6 @@ export class GildedRose {
   }
 
   updateItem(item: Item):Item {
-    
     if(this.checkName(item, 'conjured')) {
       item = this.updateConjuredItem(item);
       return item;
@@ -53,8 +52,7 @@ export class GildedRose {
           
         }
       }
-      else if (this.checkName(item, 'Backstage passes')) {
-        
+      else if (this.checkName(item, 'Backstage passes')) {  
         if (item.quality < 50) {
           item.quality = item.quality + 1
           if (item.sellIn < 10) {
@@ -67,7 +65,6 @@ export class GildedRose {
               item.quality = item.quality + 1
             }
           }
-          
         }
         if (item.quality > 50) {
           item.quality = 50;
@@ -83,22 +80,12 @@ export class GildedRose {
             if (item.sellIn < 0) {
               item.quality = item.quality - 1
             }
-          }
-         
-            
-          
+          }   
         }
-
       }
       if (item.quality < 0) {
         item.quality =0
       }
-      
-      
-
-      
-        
-    
     }
     return item;
   }
