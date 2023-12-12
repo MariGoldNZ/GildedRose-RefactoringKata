@@ -67,12 +67,19 @@ describe('Gilded Rose Approval', () => {
     const items2 = gildedRose.updateQuality();
     expect(items2[0].quality).toBe(0); 
   });
-  
+
   it('should Any item should not go negative', () => {
     const gildedRose = new GildedRose([new Item('Conjured item', 3, 0)]);
 
     const items1 = gildedRose.updateQuality();
     expect(items1[0].quality).toBe(0); 
+  });
+
+  it('should Any item should not go negative', () => {
+    const gildedRose = new GildedRose([new Item('Aged brie', 3, 0)]);
+
+    const items1 = gildedRose.updateQuality();
+    expect(items1[0].quality).toBe(1); 
   });
 
   it('should Conjured degrade twice as fast when sellIn is below 0', () => {
