@@ -11,82 +11,73 @@ export class Item {
 }
 
 export class GildedRose {
+  private static readonly MAX_QUALITY = 50;
+  private static readonly MIN_QUALITY = 0;
+  private static readonly SULFURAS = 'Sulfuras, Hand of Ragnaros';
+  private static readonly AGED_BRIE = 'Aged Brie';
+  private static readonly BACKSTAGE_PASSES = 'Backstage passes';
+
+
   items: Array<Item>;
 
   constructor(items = [] as Array<Item>) {
     this.items = items;
   }
 
-  updateConjuredItem(item: Item): Item {
+  private updateConjuredItem(item: Item): void{
     item.sellIn = item.sellIn - 1;
     item.quality = Math.max(0, item.quality - 2);
     if (item.sellIn < 0) {
       item.quality = Math.max(0, item.quality - 2);
     }
-    return item;
+    
   }
 
-  checkName(item: Item, name: string): boolean {
+  private checkName(item: Item, name: string): boolean {
     return item.name.toLowerCase().includes(name.toLowerCase());
   }
 
-  updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-        this.updateItem(this.items[i]);
-    }
+  updateQuality(): Array<Item> {
+    this.items.forEach(item => this.updateItem(item));
     return this.items;
   }
 
-  updateItem(item: Item):Item {
-    if(this.checkName(item, 'conjured')) {
-      item = this.updateConjuredItem(item);
-      return item;
-    }
+  private updateItem(item: Item): void {
+    if (this.checkName(item, 'conjured')) {
+      this.updateConjuredItem(item);
+    } 
     else {
-      if (item.name != 'Sulfuras, Hand of Ragnaros') {
-        item.sellIn = item.sellIn - 1;
-      }
-      if (this.checkName(item, 'Aged Brie')) {
-        if (item.quality < 50) {
-          item.quality = item.quality + 1
-          
+      if (item.name !== GildedRose.SULFURAS) {
+        item.sellIn -= 1;
         }
-      }
-      else if (this.checkName(item, 'Backstage passes')) {  
-        if (item.quality < 50) {
-          item.quality = item.quality + 1
+        if (this.checkName(item, GildedRose.AGED_BRIE)) {
+          item.quality = Math.min(item.quality + 1, GildedRose.MAX_QUALITY);
+          } 
+        else if (this.checkName(item, GildedRose.BACKSTAGE_PASSES)) {
+          if (item.sellIn < 0) {
+            item.quality = GildedRose.MIN_QUALITY;
+          } else {
+            item.quality = Math.min(item.quality + 1, GildedRose.MAX_QUALITY);
           if (item.sellIn < 10) {
-            if (item.quality < 50) {
-              item.quality = item.quality + 1
-            }
+            item.quality = Math.min(item.quality + 1, GildedRose.MAX_QUALITY);
           }
           if (item.sellIn < 5) {
-            if (item.quality < 50) {
-              item.quality = item.quality + 1
-            }
+            item.quality = Math.min(item.quality + 1, GildedRose.MAX_QUALITY);
           }
         }
-        if (item.quality > 50) {
-          item.quality = 50;
-        }
-        if (item.sellIn < 0) {
-          item.quality = 0
-        }
       }
+      
       else {
-        if (item.quality > 0) {
-          if (item.name != 'Sulfuras, Hand of Ragnaros') {
-            item.quality = item.quality - 1
-            if (item.sellIn < 0) {
-              item.quality = item.quality - 1
-            }
-          }   
-        }
+        if (item.quality > GildedRose.MIN_QUALITY && item.name !== GildedRose.SULFURAS) {
+          item.quality -= 1;
+          if (item.sellIn < 0) {
+          item.quality -= 1;
+          }
       }
-      if (item.quality < 0) {
-        item.quality =0
-      }
+      
     }
-    return item;
+    item.quality = Math.max(item.quality, GildedRose.MIN_QUALITY);
+    
   }
+
 }
